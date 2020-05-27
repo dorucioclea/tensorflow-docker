@@ -1,0 +1,28 @@
+version: "3.7"
+
+networks:
+  internal: 
+    external: false # Create the network if it doesn't exist
+    name: tensorflow_network
+services: 
+  # # ---------------------------------
+  # # Tensorflow platform
+  # # ---------------------------------
+
+  tensorflow-gpu: 
+    container_name: tensorflow-gpu
+    image: tensorflow-development/tensorflow-gpu-jupyter:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile.gpu
+      args:
+        - CHECKOUT_TF_SRC=1 # Checkout source code of tensorflow. 0 to not checkout
+    restart: on-failure
+    ports: 
+      - 8888:8888
+    privileged: true
+    cap_add:
+      - ALL
+    networks: 
+      - internal
+  

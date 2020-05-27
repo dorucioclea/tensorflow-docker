@@ -1,0 +1,1 @@
+docker-compose -f cpu.yml up --build
