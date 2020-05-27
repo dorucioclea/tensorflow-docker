@@ -5,7 +5,7 @@ This experiment attempts to build tensorflow models from scratch allowing us to 
 
 Steps to make this work: 
 
-Build base CPU image ([See instructions here](../tensorflow-base/Instructions.md))
+Build base CPU image ([See instructions here](https://github.com/dorucioclea/tensorflow-docker/blob/master/tensorflow-base/Instructions.md))
 Build the CPU Tensorflow models image (this might take a while)
 
 ```sh
