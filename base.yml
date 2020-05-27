@@ -1,0 +1,28 @@
+version: "3.7"
+
+networks:
+  internal: 
+    external: false # Create the network if it doesn't exist
+    name: tensorflow_network
+
+volumes:
+  tensorflow_data_volume:
+      external: false # Create the volume if it doesn't exist
+      name: tensorflow_data
+
+services: 
+  # # ---------------------------------
+  # # Tensorflow platform
+  # # ---------------------------------
+
+  tensorflow-base: 
+    container_name: tensorflow-development/tensorflow-base:latest
+    build: 
+      context: ./tensorflow-base
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports: 
+      - 8888:8888
+    networks: 
+      - internal
+  
