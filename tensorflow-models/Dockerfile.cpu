@@ -1,0 +1,43 @@
+ARG LOCAL_TENSORFLOW=latest
+
+FROM tensorflow-development/tensorflow-cpu-jupyter:${LOCAL_TENSORFLOW} AS base
+
+#
+# Create the tensorflow models folder
+#
+RUN mkdir -p /tensorflow/models && chmod -R a+rwx /tensorflow/models/
+RUN apt-get install -y --no-install-recommends python-pil python-lxml
+RUN apt-get install -y --no-install-recommends  protobuf-compiler 
+
+# RUN pip install --user pycocotools
+
+RUN pip install --user Cython 
+RUN pip install --user jupyter 
+RUN pip install --user matplotlib 
+
+RUN pip install --user --upgrade tf_slim 
+RUN pip install --user lxml 
+RUN pip install --user pillow 
+
+RUN git clone https://github.com/tensorflow/models.git /tensorflow/models
+
+WORKDIR /tensorflow/models/research
+
+# From tensorflow/models/research/
+COPY dependencies/protobuf/protoc-3.0.0-linux-x86_64.zip protobuf.zip
+RUN unzip protobuf.zip
+
+# From tensorflow/models/research/
+RUN ./bin/protoc object_detection/protos/*.proto --python_out=.
+
+RUN export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+RUN jupyter notebook --generate-config --allow-root
+RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
+
+EXPOSE 8888
+
+CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/tensorflow/models/research/object_detection", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
+
+# CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/tf", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
+
+

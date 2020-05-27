@@ -15,16 +15,19 @@ services:
   # # Tensorflow platform
   # # ---------------------------------
 
-  tensorflow-worker: 
-    container_name: tensorflow-worker
+  tensorflow-models: 
+    container_name: tensorflow-models
     build: 
-      context: ./tensorflow
-      dockerfile: Dockerfile
+      context: ./tensorflow-models
+      dockerfile: Dockerfile.cpu
     restart: on-failure
     volumes: 
       - tensorflow_data_volume:/share/tensorflow
     ports: 
       - 8888:8888
+    privileged: true
+    cap_add:
+      - ALL
     networks: 
       - internal
   
