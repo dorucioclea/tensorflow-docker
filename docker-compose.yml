@@ -20,6 +20,8 @@ services:
     build: 
       context: ./tensorflow-models
       dockerfile: Dockerfile.cpu
+      args:
+        - LOCAL_TENSORFLOW_VERSION=latest
     restart: on-failure
     volumes: 
       - tensorflow_data_volume:/share/tensorflow

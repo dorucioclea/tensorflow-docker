@@ -1,0 +1,1 @@
+docker-compose -f build.development.yml build tensorflow-cpu

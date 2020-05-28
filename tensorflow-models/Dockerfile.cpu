@@ -1,6 +1,6 @@
-ARG LOCAL_TENSORFLOW=latest
+ARG LOCAL_TENSORFLOW_VERSION=latest
 
-FROM tensorflow-development/tensorflow-cpu-jupyter:${LOCAL_TENSORFLOW} AS base
+FROM tensorflow-development/tensorflow-cpu-jupyter:${LOCAL_TENSORFLOW_VERSION} AS base
 
 #
 # Create the tensorflow models folder

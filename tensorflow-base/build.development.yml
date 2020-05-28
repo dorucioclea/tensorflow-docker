@@ -13,8 +13,25 @@ services:
     container_name: tensorflow-cpu
     image: tensorflow-development/tensorflow-cpu-jupyter:latest
     build: 
-      context: .
-      dockerfile: Dockerfile.cpu
+      context: ./dockerfiles
+      dockerfile: Dockerfile.cpu.development
+      args:
+        - CHECKOUT_TF_SRC=1 # Checkout source code of tensorflow. 0 to not checkout
+    restart: on-failure
+    ports: 
+      - 8888:8888
+    privileged: true
+    cap_add:
+      - ALL
+    networks: 
+      - internal
+
+  tensorflow-gpu: 
+    container_name: tensorflow-gpu
+    image: tensorflow-development/tensorflow-gpu-jupyter:latest
+    build: 
+      context: ./dockerfiles
+      dockerfile: Dockerfile.gpu.development
       args:
         - CHECKOUT_TF_SRC=1 # Checkout source code of tensorflow. 0 to not checkout
     restart: on-failure
