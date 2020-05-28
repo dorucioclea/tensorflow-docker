@@ -1,0 +1,45 @@
+version: "3.7"
+
+networks:
+  internal: 
+    external: false # Create the network if it doesn't exist
+    name: tensorflow_network
+services: 
+  # # ---------------------------------
+  # # Tensorflow platform
+  # # ---------------------------------
+
+  tensorflow-cpu: 
+    container_name: tensorflow-cpu
+    image: tensorflow-development/tensorflow-cpu-jupyter:latest
+    build: 
+      context: ./dockerfiles
+      dockerfile: Dockerfile.cpu
+      args:
+        - TF_PACKAGE_VERSION=2.2.0 # See https://pypi.org/project/tensorflow/
+    restart: on-failure
+    ports: 
+      - 8888:8888
+    privileged: true
+    cap_add:
+      - ALL
+    networks: 
+      - internal
+
+  tensorflow-gpu: 
+    container_name: tensorflow-gpu
+    image: tensorflow-development/tensorflow-gpu-jupyter:latest
+    build: 
+      context: ./dockerfiles
+      dockerfile: Dockerfile.gpu
+      args:
+        - TF_PACKAGE_VERSION=2.2.0 # See https://pypi.org/project/tensorflow/
+    restart: on-failure
+    ports: 
+      - 8888:8888
+    privileged: true
+    cap_add:
+      - ALL
+    networks: 
+      - internal
+  
