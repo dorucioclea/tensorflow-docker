@@ -11,7 +11,7 @@ services:
 
   tensorflow-cpu: 
     container_name: tensorflow-cpu
-    image: tensorflow-development/tensorflow-cpu-jupyter:latest
+    image: tensorflow-development/tensorflow-cpu-jupyter-development:latest
     build: 
       context: ./dockerfiles
       dockerfile: Dockerfile.cpu.development
@@ -28,7 +28,7 @@ services:
 
   tensorflow-gpu: 
     container_name: tensorflow-gpu
-    image: tensorflow-development/tensorflow-gpu-jupyter:latest
+    image: tensorflow-development/tensorflow-gpu-jupyter-development:latest
     build: 
       context: ./dockerfiles
       dockerfile: Dockerfile.gpu.development

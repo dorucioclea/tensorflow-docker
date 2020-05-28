@@ -1,6 +1,9 @@
 ARG LOCAL_TENSORFLOW_VERSION=latest
 
-FROM tensorflow-development/tensorflow-cpu-jupyter:${LOCAL_TENSORFLOW_VERSION} AS base
+#
+# Change this if you want your image based on a non-development tf base image
+#
+FROM tensorflow-development/tensorflow-cpu-jupyter-development:${LOCAL_TENSORFLOW_VERSION} AS base
 
 #
 # Create the tensorflow models folder
@@ -25,6 +28,10 @@ WORKDIR /tensorflow/models/research
 
 # From tensorflow/models/research/
 COPY dependencies/protobuf/protoc-3.0.0-linux-x86_64.zip protobuf.zip
+
+#
+# Sometimes having issues with installing protobuf compiler so better just run it from source
+#
 RUN unzip protobuf.zip
 
 # From tensorflow/models/research/
@@ -35,9 +42,4 @@ RUN jupyter notebook --generate-config --allow-root
 RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
 
 EXPOSE 8888
-
 CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/tensorflow/models/research/object_detection", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
-
-# CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/tf", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
-
-
