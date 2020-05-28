@@ -10,11 +10,11 @@ NOTE: These images are needed for any further experiments so please build them f
 In order to build the `cpu tensorflow image` (the only one currently used)
 
 ```sh
-> ./build-tensorflow-cpu.sh
+> ./build.cpu.development.sh
 ```
 
 In order to build the `gpu tensorflow image` (the only one currently used)
 
 ```sh
-> ./build-tensorflow-cpu.sh
+> ./build.gpu.development.sh
 ```
