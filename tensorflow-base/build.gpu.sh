@@ -1,1 +1,1 @@
-docker-compose -f build.yml build tensorflow-gpu
+docker-compose -f build.yml build --no-cache tensorflow-gpu 

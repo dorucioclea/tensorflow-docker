@@ -1,1 +1,1 @@
-docker-compose -f build.development.yml build tensorflow-cpu
+docker-compose -f build.development.yml build --no-cache tensorflow-cpu
